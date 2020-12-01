@@ -1,0 +1,303 @@
+body{
+	margin: 0;
+	height: 100vh;
+	font-size: 5em;
+	font-family: Montserrat;
+	font-weight: bold;
+}
+
+section{
+	height: 100%;
+}
+
+ul{
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	display: inline;
+	justify-content: center;
+	align-items: center;
+	justify-items:center;
+	height: 100vh;
+}
+span{
+	width: 110px;
+	height: 110px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	background: black;
+	border-radius: 50%;
+}
+a{
+	color:#a12c05;
+}
+
+.container{
+	max-width: 100%;
+	margin: 0 auto;
+	font-size: 14pt;
+	font-family:"Segoe UI Light";
+	padding-top: 25px;
+}
+.scrolltext{
+	max-width:75%;
+	position: relative;
+	padding: 15px;
+	left: 50%;
+	transform: translate(-50%,0); 
+	border-radius:15px;
+	background-color: rgba(255, 255, 255, 0.8);
+}
+.spacer{
+	height: 20px;
+	background: #ffffff;
+	position: relative;
+	z-index: 1;
+}
+
+.starttext{
+	background: #ffffff;
+	position: relative;
+	left: 50%;
+	transform: translate(-50%, 0%);	
+	padding: 10px;
+	
+}
+
+.pages{
+	font-size: 16pt;
+	font-family: "Segoe UI Light";
+	position:absolute;
+	top: 4%;
+	left: 7%;
+	padding-top: 10px;
+	z-index:2;
+	width: 90%;
+	align-items: left;
+}
+
+.links{
+	float: left;
+	padding-right: 20px;
+}
+
+.navbar{
+	padding:10px;
+	padding-top:5px;
+}
+
+.navbar:hover{
+	background-color: #a12c05;
+	color:white;
+	border-radius:10px
+}
+
+.portraits{
+	position:absolute;
+	bottom: 35%;
+	left: 10%;
+	z-index:3;
+	animation-name:pop;
+	animation-duration:1s;
+	animation-timing-function:ease-out;
+	background-attachment:fixed;
+}
+@keyframes pop{
+	from{bottom:25%;opacity:0}
+	to{bottom:35%;opacity:1}
+}
+.logo{
+	float:left;
+	padding-right:30px;
+	position:relative;
+	top:-10px
+}
+
+.entry_title{
+	position:absolute;
+	bottom:30%;
+	left:10%;
+	z-index:3;
+	color:#a12c05;
+	font-style: bold;
+	font-family: "Segoe UI";
+	animation-name:riseTitle;
+	animation-duration:1s;
+	animation-timing-function:ease-out;
+}
+@keyframes riseTitle{
+	from{bottom:25%;opacity:0}
+	to{bottom:30%;opacity:1}
+}
+
+.tabulated{
+	padding-bottom:5px;
+	padding-right:30px;
+	font-style:italic;
+}
+.vertical{
+	position:absolute;
+	bottom: 35%;
+	right: 10%;
+	z-index:3;
+}
+.image{
+	position:relative;
+	left:50%;
+	transform:translate(-50%,0);
+}
+.image_recital{
+	position:relative;
+	left:50%;
+	transform:translate(-50%,0);
+}
+	
+.perf_title{
+	color:#a12c05;
+	font-style: bold;
+	font-family: "Segoe UI"
+}
+
+.parallax2{
+	position:absolute;
+	bottom:-275%;
+	left:0%;
+	z-index:0;
+}
+.parallax_recital{
+	position:absolute;
+	bottom:-150%;
+	left:0%;
+	transform:translate(-50%,0);
+	z-index:0;
+}
+	
+.microphone{
+	position:absolute;
+	bottom:-110%;
+	left:0%;
+	z-index:0;
+	background-attachment:fixed;
+}
+.guru{
+	position:absolute;
+	bottom:-110%;
+	left:25%;
+	z-index:0;
+	background-attachment:fixed;
+}
+.starter{
+	max-width:75%;
+	position: relative;
+	padding: 15px;
+	left: 50%;
+	transform: translate(-50%,0); 
+	border-radius:15px;
+	background-color: rgba(255, 255, 255, 0.8);
+	animation-name:fall;
+	animation-duration:1s;
+	animation-timing-function:ease-out;
+}
+@keyframes fall{
+	from{opacity:0}
+	to{opacity:1}
+}
+
+.parallax3{
+	position:absolute;
+	bottom:-450%;
+	left:0%;
+	z-index:0;
+}
+.spacer{
+	height=0
+}
+
+.heading{
+	font-family: "Segoe UI", sans-serif;
+	font-size:20pt;
+}
+.endnote{
+	position:absolute;
+	bottom:0;
+	font-size:12pt;
+	z-index:3
+}
+
+@media (orientation:portrait){
+	.navbar{
+		padding:0px;
+		padding-left:10px;
+		padding-right:10px;
+	}
+	.parallax{
+		position:absolute;
+		bottom:50%;
+		left:0%;
+		z-index:0;
+	}
+	.microphone{
+		position:absolute;
+		bottom:-50%;
+		left:0%;
+		z-index:0;
+	}
+	.starter{
+		max-width:100%;
+		position: relative;
+		padding: 15px;
+		top:0;
+		left: 50%;
+		transform: translate(-50%, 400px); 
+		border-radius:15px;
+		background-color: rgba(255, 255, 255, 0.8);
+	}
+	.spacer{
+		height=1000px;
+	}
+	.scrolltext{
+		max-width:100%;
+		position: relative;
+		padding: 15px;
+		top:0%;
+		left: 50%;
+		transform: translate(-50%,60vh); 
+		border-radius:15px;
+		background-color: rgba(255, 255, 255, 0.8);
+	}
+	.image_recital{
+		position:relative;
+		left:50%;
+		transform:translate(-50%,60vh);
+	}
+	.guru{
+		position:absolute;
+		top:110vh%;
+		left:25%;
+		z-index:0;
+	}
+	.parallax2{
+	position:absolute;
+	bottom:-150%;
+	left:0%;
+	z-index:0;
+	}
+	
+	.parallax3{
+		position:absolute;
+		bottom:-250%;
+		left:0%;
+		z-index:0;
+	}
+	
+	.container{
+		max-width: 100%;
+		margin: 0 auto;
+		font-size: 14pt;
+		font-family:"Calibri";
+		padding: 25px;
+	}
+}
+	
+	
