@@ -3,7 +3,7 @@ body{
 	height: 100vh;
 	font-size: 5em;
 	font-family: Montserrat;
-	font-weight: bold;
+	font-weight: normal;
 }
 
 section{
@@ -40,15 +40,7 @@ a{
 	font-family:"Segoe UI Light";
 	padding-top: 25px;
 }
-.scrolltext{
-	max-width:75%;
-	position: relative;
-	padding: 15px;
-	left: 50%;
-	transform: translate(-50%,0); 
-	border-radius:15px;
-	background-color: rgba(255, 255, 255, 0.8);
-}
+
 .spacer{
 	height: 20px;
 	background: #ffffff;
@@ -57,136 +49,81 @@ a{
 }
 
 .starttext{
-	background: #ffffff;
+	background: #eeeeee;
 	position: relative;
 	left: 50%;
 	transform: translate(-50%, 0%);	
 	padding: 10px;
+	border-radius:15px;
+	padding:15px;
 	
 }
 
-.pages{
-	font-size: 16pt;
-	font-family: "Segoe UI Light";
-	position:absolute;
-	top: 4%;
-	left: 7%;
-	padding-top: 10px;
-	z-index:2;
-	width: 90%;
-	align-items: left;
+.slidecontainer {
+  width: 50%; /* Width of the outside container */
+  padding:10px;
+  display: inline-block;
 }
 
-.links{
-	float: left;
-	padding-right: 20px;
+/* The slider itself */
+.slider {
+  -webkit-appearance: none;  /* Override default CSS styles */
+  appearance: none;
+  width: 100%; /* Full-width */
+  height: 25px; /* Specified height */
+  background: #d3d3d3; /* Grey background */
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
 }
 
-.navbar{
-	padding:10px;
-	padding-top:5px;
+/* Mouse-over effects */
+.slider:hover {
+  opacity: 1; /* Fully shown on mouse-over */
 }
 
-.navbar:hover{
-	background-color: #a12c05;
-	color:white;
-	border-radius:10px
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #4CAF50; /* Green background */
+  cursor: pointer; /* Cursor on hover */
 }
 
-.portraits{
-	position:absolute;
-	bottom: 35%;
-	left: 10%;
-	z-index:3;
-	animation-name:pop;
-	animation-duration:1s;
-	animation-timing-function:ease-out;
-	background-attachment:fixed;
-}
-@keyframes pop{
-	from{bottom:25%;opacity:0}
-	to{bottom:35%;opacity:1}
-}
-.logo{
-	float:left;
-	padding-right:30px;
-	position:relative;
-	top:-10px
+.slider::-moz-range-thumb {
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #4CAF50; /* Green background */
+  cursor: pointer; /* Cursor on hover */
 }
 
-.entry_title{
-	position:absolute;
-	bottom:30%;
-	left:10%;
-	z-index:3;
-	color:#a12c05;
-	font-style: bold;
-	font-family: "Segoe UI";
-	animation-name:riseTitle;
-	animation-duration:1s;
-	animation-timing-function:ease-out;
+.button {
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
 }
-@keyframes riseTitle{
-	from{bottom:25%;opacity:0}
-	to{bottom:30%;opacity:1}
+.button1 {background-color: #4CAF50;} /* Green */
+
+.value{
+	display: inline-block;
+	
 }
 
-.tabulated{
-	padding-bottom:5px;
-	padding-right:30px;
-	font-style:italic;
-}
-.vertical{
-	position:absolute;
-	bottom: 35%;
-	right: 10%;
-	z-index:3;
-}
 .image{
 	position:relative;
 	left:50%;
 	transform:translate(-50%,0);
 }
-.image_recital{
-	position:relative;
-	left:50%;
-	transform:translate(-50%,0);
-}
-	
-.perf_title{
-	color:#a12c05;
-	font-style: bold;
-	font-family: "Segoe UI"
-}
 
-.parallax2{
-	position:absolute;
-	bottom:-275%;
-	left:0%;
-	z-index:0;
-}
-.parallax_recital{
-	position:absolute;
-	bottom:-150%;
-	left:0%;
-	transform:translate(-50%,0);
-	z-index:0;
-}
-	
-.microphone{
-	position:absolute;
-	bottom:-110%;
-	left:0%;
-	z-index:0;
-	background-attachment:fixed;
-}
-.guru{
-	position:absolute;
-	bottom:-110%;
-	left:25%;
-	z-index:0;
-	background-attachment:fixed;
-}
 .starter{
 	max-width:75%;
 	position: relative;
@@ -204,100 +141,6 @@ a{
 	to{opacity:1}
 }
 
-.parallax3{
-	position:absolute;
-	bottom:-450%;
-	left:0%;
-	z-index:0;
-}
-.spacer{
-	height=0
-}
 
-.heading{
-	font-family: "Segoe UI", sans-serif;
-	font-size:20pt;
-}
-.endnote{
-	position:absolute;
-	bottom:0;
-	font-size:12pt;
-	z-index:3
-}
-
-@media (orientation:portrait){
-	.navbar{
-		padding:0px;
-		padding-left:10px;
-		padding-right:10px;
-	}
-	.parallax{
-		position:absolute;
-		bottom:50%;
-		left:0%;
-		z-index:0;
-	}
-	.microphone{
-		position:absolute;
-		bottom:-50%;
-		left:0%;
-		z-index:0;
-	}
-	.starter{
-		max-width:100%;
-		position: relative;
-		padding: 15px;
-		top:0;
-		left: 50%;
-		transform: translate(-50%, 400px); 
-		border-radius:15px;
-		background-color: rgba(255, 255, 255, 0.8);
-	}
-	.spacer{
-		height=1000px;
-	}
-	.scrolltext{
-		max-width:100%;
-		position: relative;
-		padding: 15px;
-		top:0%;
-		left: 50%;
-		transform: translate(-50%,60vh); 
-		border-radius:15px;
-		background-color: rgba(255, 255, 255, 0.8);
-	}
-	.image_recital{
-		position:relative;
-		left:50%;
-		transform:translate(-50%,60vh);
-	}
-	.guru{
-		position:absolute;
-		top:110vh%;
-		left:25%;
-		z-index:0;
-	}
-	.parallax2{
-	position:absolute;
-	bottom:-150%;
-	left:0%;
-	z-index:0;
-	}
-	
-	.parallax3{
-		position:absolute;
-		bottom:-250%;
-		left:0%;
-		z-index:0;
-	}
-	
-	.container{
-		max-width: 100%;
-		margin: 0 auto;
-		font-size: 14pt;
-		font-family:"Calibri";
-		padding: 25px;
-	}
-}
 	
 	
