@@ -2,104 +2,86 @@ function functionName(){
 	var theta = [];
 	var phi = [];
 	var omega = [];
-	var voices = [];
 	var exclusivities = [];
 	var genders = [];
+	var names = [];
 	
-	var theta0 = []
-	var phi0 = []
-	var omega0 = []
+	var theta0 = [];
+	var phi0 = [];
+	var omega0 = [];
 	
-	var n, scale, exclusivity, retention, m_voice, f_voice, minority;
-	m_fraction = document.getElementById("minority").value
-	n = 100 - m_fraction;
-	scale = 0.05;
-	exclusivity = document.getElementById("exclusivity").value;
-	retention = 0.05;
-	m_voice = document.getElementById("malevoice").value/100;
-	f_voice = document.getElementById("femalevoice").value/100;
-	minority = m_fraction/100;
+	var N = 500;
+	var branching = document.getElementById("omexclusivity").value;
+	var imbalance = document.getElementById("malevoice").value/100;
+	var minority = document.getElementById("minority").value / 100;
 	
-	// Majority Males
-	var number = Math.floor(n/2);
+	var scale = 0.05;
+	var o_scale = 0.05;
+	
+	var exclusivity = document.getElementById("exclusivity").value;
+	var retention = 0.05
+	
+	
+	
+	// Populate community
 	var i;
 	var t, p, o;
+	var imb;
 	
-	for (i=0; i < number; i++){
-		t = normalRandomScaled(0, scale);
+	var approxGender, approxRace, approxOmega;
+	
+	approxOmega = Math.PI / 4;
+	
+	for (i=0; i < N; i++){
+		
+		if (i / N/2) {
+			imb = imbalance;
+		} else {
+			imb = 1 - imbalance;
+		}
+		
+		var name = "";
+		
+		if (Math.random() < imb){
+			approxGender = 0;
+			genders.push("rgba(0,0,255,0.1)");
+			genders.push("rgba(0,0,255,0.1)");
+			genders.push("rgba(0,0,255,0.1)");
+			name += "Male, "; 
+		} else {
+			approxGender = Math.PI/2;
+			genders.push("rgba(255,0,0,0.1)");
+			genders.push("rgba(255,0,0,0.1)");
+			genders.push("rgba(255,0,0,0.1)");
+			name += "Female, ";
+		}			
+		
+		if (Math.random() < minority) {
+			approxRace = Math.PI/2;
+			name += "Minority";
+		} else {
+			approxRace = 0;
+			name += "Majority";
+		}
+		
+		names.push(name)
+		names.push(name)
+		names.push(name)
+		t = normalRandomScaled(approxRace, scale);
 		theta.push(t);
 		theta0.push(t);
-		p = normalRandomScaled(0, scale);
+		p = normalRandomScaled(approxGender, scale);
 		phi.push(p);
 		phi0.push(p);
-		o = normalRandomScaled(Math.PI/4, scale);
+		o = normalRandomScaled(approxOmega, o_scale);
 		omega.push(o);
 		omega0.push(o);
-		voices.push(m_voice);
 		exclusivities.push(exclusivity);
-		genders.push("#0000ff");
 	}
 	
-	// Majority Females
-	var number = Math.floor(n/2);
-	var i;
-	for (i=0; i < number; i++){
-		t = normalRandomScaled(0, scale);
-		theta.push(t);
-		theta0.push(t);
-		p = normalRandomScaled(Math.PI/2, scale);
-		phi.push(p);
-		phi0.push(p);
-		o = normalRandomScaled(Math.PI/4, scale);
-		omega.push(o);
-		omega0.push(o);
-		voices.push(f_voice);
-		exclusivities.push(exclusivity);
-		genders.push("#ff0000");
-	}
 	
-	var m = Math.round(minority*100);
-	
-	// Minority Males
-	var number = Math.floor(m/2);
-	var i;
-	for (i=0; i < number; i++){
-		t = normalRandomScaled(Math.PI/2, scale);
-		theta.push(t);
-		theta0.push(t);
-		p = normalRandomScaled(0, scale);
-		phi.push(p);
-		phi0.push(p);
-		o = normalRandomScaled(Math.PI/4, scale);
-		omega.push(o);
-		omega0.push(o);
-		voices.push(m_voice);
-		exclusivities.push(exclusivity);
-		genders.push("#0000ff");
-	}
-	
-	// Minority Females
-	var number = Math.floor(m/2);
-	var i;
-	for (i=0; i < number; i++){
-		t = normalRandomScaled(Math.PI/2, scale);
-		theta.push(t);
-		theta0.push(t);
-		p = normalRandomScaled(Math.PI/2, scale);
-		phi.push(p);
-		phi0.push(p);
-		o = normalRandomScaled(Math.PI/4, scale);
-		omega.push(o);
-		omega0.push(o);
-		voices.push(f_voice);
-		exclusivities.push(exclusivity);
-		genders.push("#ff0000");
-	}
-	
-	var N = theta.length;
-	
-	var open_minded = document.getElementById("openminded").value / 100;
-	var om_exclusivity = document.getElementById("omexclusivity").value;
+	var open_minded = document.getElementById("openminded").value/100;
+	var om_exclusivity = 0;
 	
 	var bucket = [];
 	for (var i=0;i<=N;i++) {
@@ -113,108 +95,78 @@ function functionName(){
 		exclusivities[specialIndex] = om_exclusivity;
 	}
 	
-	var generations = 20;
-	var g, i, j, diff1, diff2, diff3, dot;
+	var generations = 100;
+	var interactions = 10;
+	var power_dynamics = document.getElementById("femalevoice").value/50;
+	var power_decay = 2-power_dynamics;
+	var r = 0.9;
+	var count = 0
+	
+	var g, i, j, k, diff1, diff2, diff3, dot, upper, lower, relatedness, decay, difference;
 	for (g=0; g < generations; g++){
 		for (var i = 0; i < N; i++){
-			for (var j=i + 1; j < N; j++){
-				dot = getDot(theta[i], phi[i], omega[i], theta[j], phi[j], omega[j]);
-				diff1 = theta[i] - theta[j];
-				diff2 = phi[i] - phi[j];
-				diff3 = omega[i] - omega[j];
-				if (Math.random() < dot ** exclusivities[i]){
-					theta[i] -= diff1 * voices[j] * retention;
-					phi[i] -= diff2 * voices[j] * retention;
-					omega[i] -= diff3 * voices[j] * retention;
+			for (var j=0; j < interactions; j++){
+				k = Math.floor(Math.random() * N)
+				if (k == i){
+					continue;
 				}
-				if (Math.random() < dot ** exclusivities[j]){
-					theta[j] += diff1 * voices[i] * retention;
-					phi[j] += diff2 * voices[i] * retention;
-					omega[j] += diff3 * voices[i] * retention;
+				
+				relatedness = r ** connect(i, k, branching);
+				if (Math.random() > relatedness) {
+					continue;
+				}
+				
+				upper = Math.min(i, k);
+				lower = Math.max(i, k);
+				
+				
+				difference = level(lower, branching) - level(upper, branching);
+				decay = Math.exp(-1 * power_decay * difference);
+				
+				dot = getDot(theta[i], phi[i], omega[i], theta[k], phi[k], omega[k]);
+				diff1 = theta[lower] - theta[upper];
+				diff2 = phi[lower] - phi[upper];
+				diff3 = omega[lower] - omega[upper];
+				
+				if (Math.random() < dot ** exclusivities[lower]){
+					count += 1
+					theta[lower] -= diff1 * retention;
+					phi[lower] -= diff2 * retention;
+					omega[lower] -= diff3 * retention;
+				}
+				if (Math.random() < dot ** exclusivities[upper]){
+					theta[upper] += diff1 * retention * decay;
+					phi[upper] += diff2 * retention * decay;
+					omega[upper] += diff3 * retention * decay;
 				}
 			}
 		}
 	}
 	var data = [];
-	
+	var n = 75
+	var m = 25
 	var male_majority = {
-		x:theta.slice(0, Math.floor(n/2)).reduce(function(arr, v, i){
-			return arr.concat(v, theta0.slice(0,Math.floor(n/2))[i], Math.NaN);
+		x:theta.reduce(function(arr, v, i){
+			return arr.concat(v, theta0[i], Math.NaN);
 		},[]),
-		y:phi.slice(0, Math.floor(n/2)).reduce(function(arr, v, i){
-			return arr.concat(v, phi0.slice(0,Math.floor(n/2))[i], Math.NaN);
+		y:phi.reduce(function(arr, v, i){
+			return arr.concat(v, phi0[i], Math.NaN);
 		},[]),
-		z:omega.slice(0, Math.floor(n/2)).reduce(function(arr, v, i){
-			return arr.concat(v, omega0.slice(0,Math.floor(n/2))[i], Math.NaN);
+		z:omega.reduce(function(arr, v, i){
+			return arr.concat(v, omega0[i], Math.NaN);
 		},[]),
 		mode: "lines",
-		name: "Male, Majority",
+		hovertemplate: "%{text}",
+		name: "Knowledge Vectors",
 		type: "scatter3d",
+		text: names,
 		line:{
-			color: "rgba(0,0,255,0.3)",
+			color: genders,
 			width: 2,
 		},
 	}
 	
-	var female_majority = {
-		x:theta.slice(Math.floor(n/2), Math.floor(n/2)*2).reduce(function(arr, v, i){
-			return arr.concat(v, theta0.slice(Math.floor(n/2),Math.floor(n/2)*2)[i], Math.NaN);
-		},[]),
-		y:phi.slice(Math.floor(n/2), Math.floor(n/2)*2).reduce(function(arr, v, i){
-			return arr.concat(v, phi0.slice(Math.floor(n/2),Math.floor(n/2)*2)[i], Math.NaN);
-		},[]),
-		z:omega.slice(Math.floor(n/2), Math.floor(n/2)*2).reduce(function(arr, v, i){
-			return arr.concat(v, omega0.slice(Math.floor(n/2),Math.floor(n/2)*2)[i], Math.NaN);
-		},[]),
-		mode: "lines",
-		name: "Female, Majority",
-		type: "scatter3d",
-		line:{
-			color: "rgba(255,0,0,0.3)",
-			width: 2,
-		},
-	}
-	
-	var male_minority = {
-		x:theta.slice(Math.floor(n/2)*2, Math.floor(n/2)*2+Math.floor(m/2)).reduce(function(arr, v, i){
-			return arr.concat(v, theta0.slice(Math.floor(n/2)*2, Math.floor(n/2)*2+Math.floor(m/2))[i], Math.NaN);
-		},[]),
-		y:phi.slice(Math.floor(n/2)*2, Math.floor(n/2)*2+Math.floor(m/2)).reduce(function(arr, v, i){
-			return arr.concat(v, phi0.slice(Math.floor(n/2)*2, Math.floor(n/2)*2+Math.floor(m/2))[i], Math.NaN);
-		},[]),
-		z:omega.slice(Math.floor(n/2)*2, Math.floor(n/2)*2+Math.floor(m/2)).reduce(function(arr, v, i){
-			return arr.concat(v, omega0.slice(Math.floor(n/2)*2, Math.floor(n/2)*2+Math.floor(m/2))[i], Math.NaN);
-		},[]),
-		mode: "lines",
-		name: "Male, Minority",
-		type: "scatter3d",
-		line:{
-			color: "rgba(0,0,255,0.3)",
-			width: 2,
-		},
-	}
-	
-	var female_minority = {
-		x:theta.slice(Math.floor(n/2)*2+Math.floor(m/2), N).reduce(function(arr, v, i){
-			return arr.concat(v, theta0.slice(Math.floor(n/2)*2+Math.floor(m/2), N)[i], Math.NaN);
-		},[]),
-		y:phi.slice(Math.floor(n/2)*2+Math.floor(m/2), N).reduce(function(arr, v, i){
-			return arr.concat(v, phi0.slice(Math.floor(n/2)*2+Math.floor(m/2), N)[i], Math.NaN);
-		},[]),
-		z:omega.slice(Math.floor(n/2)*2+Math.floor(m/2), N).reduce(function(arr, v, i){
-			return arr.concat(v, omega0.slice(Math.floor(n/2)*2+Math.floor(m/2), N)[i], Math.NaN);
-		},[]),
-		mode: "lines",
-		name: "Female, Minority",
-		type: "scatter3d",
-		line:{
-			color: "rgba(255,0,0,0.3)",
-			width: 2,
-		},
-	}
-	
-		
-	data = [male_majority, female_majority, male_minority, female_minority]
+	data = [male_majority]
 	
 	var layout = {
 		autosize: false,
@@ -261,7 +213,7 @@ function functionName(){
 	};
 	TESTER = document.getElementById("tester")
 	Plotly.newPlot("tester", data, layout)
-	
+	console.log(count)
 }
 
 var spareRandom = null;
@@ -322,4 +274,22 @@ function getDot(theta1, phi1, omega1, theta2, phi2, omega2){
 	
 	return Math.abs(a1 * a2 + b1 * b2 + c1 * c2 + d1 * d2);
 
+}
+
+function level(index, base){
+	return Math.floor(Math.log(index+1) / Math.log(base))
+}
+
+function connect(x,y, base){
+	if (x==y){
+		return 0
+	}
+	if (Math.min(x,y) < 0){
+		return 0
+	}
+	var leaf = Math.max(x,y)
+	var retain = Math.min(x,y)
+	var leaf2 = Math.floor((leaf - 1) / base)
+	
+	return 1 + connect(leaf2, retain, base)
 }
