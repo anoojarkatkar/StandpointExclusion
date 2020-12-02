@@ -14,9 +14,9 @@
 		<div class="starter">
 			<img src='Example.png' style="width:50%;" class="image"></img>
 			<p class="starttext">Welcome! In this simulation, we will be imagining knowledge claims as unit vectors embedded in a 4D hypersphere. 
-			The four dimensions correspond to knowledge of being a male, female, majority, and minority respectively.  In this simulated community, people hold knowledge claims that are initially derived from their specific standpoint. A majority female, for example, has a knowledge claim that is oriented with some component "majority" experience, and some component "female" experience. The ratio of these components is determined by the angle "omega," which we will keep around 50/50 (45 degrees) for everyone for simplicity.
+			The four dimensions correspond to knowledge of being a male, female, majority, and minority respectively.  In this simulated community of 500 individuals, people hold knowledge claims that are initially derived from their specific standpoint. A majority female, for example, has a knowledge claim that is oriented with some component "majority" experience, and some component "female" experience. The ratio of these components is determined by the angle "omega," which we will keep around 50/50 (45 degrees) for everyone for simplicity.
 			<br></br>
-			In each generation, the members of this community will have the chance to interact with everyone else. The likelihood that the interaction between two individuals happens is determined by the similarity of their two knowledge claims, scaled exponentially by a value called "exclusivity". The more exclusive an individual is, the more likely they are to avoid interacting with knowledge claims different to their own. A certain fraction of the population, called "open-minded" will be less exclusive than everyone else. We will then plot the results after 20 generations.</p>
+			This community displays a social hierarchy, where individuals are supervised by others, and supervisors tend to listen less to their subordinates than their subordinates listen to them (adjusted by the "Power Dynamics" slider below). The exact structure of this hierarchy is adjusted by the "Branching" parameter below. In each generation, the members of this community will have the chance to interact with 10 other people, with the likelihood of an interaction scaling by their "degrees of separation" in this social structure. The individuals then have a chance to learn from their interaction, represented by adjusting their own knowledge claim by 5%. The likelihood that an individual learns from this interaction is determined by the similarity of the two knowledge claims, scaled exponentially by a value called "exclusivity". The more exclusive an individual is, the less likely they are to learn from knowledge claims different to their own. A certain fraction of the population, called "open-minded" will be less exclusive than everyone else. We will then plot the results after 100 generations.</p>
 		
 			<div class="starttext">
 				<b>Exclusivity:</b> Individuals preferentially interact with those similar to themselves. How significant is this effect?
@@ -27,7 +27,7 @@
 			</div>
 			<p></p>
 			<div class="starttext">
-				<b>Minority:</b> What fraction of the population is a minority?
+				<b>Minority:</b> What percentage of the population is a minority?
 				<div id="min_output"></div>
 				<div class="slidecontainer">
 					<input type="range" min="0" max="50" value="10" class="slider" id="minority">
@@ -35,15 +35,15 @@
 			</div>
 			<p></p>
 			<div class="starttext">
-				<b>Male Voice:</b> To what extent are male voices heard in the community?
+				<b>Imbalance:</b> What fraction of positions of power are occupied by males?
 				<div id="male_output"></div>
 				<div class="slidecontainer">
-					<input type="range" min="0" max="100" value="100" class="slider" id="malevoice">
+					<input type="range" min="0" max="100" value="80" class="slider" id="malevoice">
 				</div>
 			</div>
 			<p></p>
 			<div class="starttext">
-				<b>Female Voice:</b> To what extent are female voices heard in the community?
+				<b>Power Dynamics:</b> To what extent do those in power listen to those with less power?
 				<div id="female_output"></div>
 				<div class="slidecontainer">
 					<input type="range" min="0" max="100" value="50" class="slider" id="femalevoice">
@@ -51,7 +51,7 @@
 			</div>
 			<p></p>
 			<div class="starttext">
-				<b>Open-Minded:</b> What fraction of the population is open-minded?
+				<b>Open-Minded:</b> What percentage of the population is open-minded?
 				<div id="om_output"></div>
 				<div class="slidecontainer">
 					<input type="range" min="0" max="100" value="0" class="slider" id="openminded">
@@ -59,17 +59,17 @@
 			</div>
 			<p></p>
 			<div class="starttext">
-				<b>Open-Minded Exclusivity:</b> For those who are open-minded, what is their exclusivity?
+				<b>Branching:</b> How many individuals are supervised by each person?
 				<div id="omexc_output"></div>
 				<div class="slidecontainer">
-					<input type="range" min="0" max="20" value="0" class="slider" id="omexclusivity">
+					<input type="range" min="2" max="10" value="5" class="slider" id="omexclusivity">
 				</div>
 			</div>
 			<p></p>
 			<button class="button button1" onclick="functionName()">Run Simulation!</button>
 			<div id="tester"></div>
 			
-			<p class="starttext">This graph connects the initial knowledge claims of each individual to their final knowledge claim after the 20 iterations. To interpret this graph, examine 1) whether there are any consensus knowledge claims reached by different groups, 2) how representative that consensus knowledge claim is of each perspective, and 3) whether there are any perspectives that are excluded from this consensus. Depending on the parameters you set, you might see echo chambers (four isolated groups), intersectional marginalization (one isolated group), gender/racial inequality (a consensus that is offset from the center) and more!</p>
+			<p class="starttext">This graph connects the initial knowledge claims of each individual to their final knowledge claim after the 100 generations. Hover over lines to identify the demographic to which they belong. To interpret this graph, examine 1) whether there are any consensus knowledge claims reached by different groups, 2) how representative that consensus knowledge claim is of each perspective, and 3) whether there are any perspectives that are excluded from this consensus. Depending on the parameters you set, you might see echo chambers (four isolated groups), intersectional marginalization (one isolated group), gender/racial inequality (a consensus that is offset from the center) and more!</p>
 			
 		</div>
 
@@ -94,18 +94,18 @@ minority.oninput = function() {
 
 var malevoice = document.getElementById("malevoice");
 var male_output = document.getElementById("male_output");
-male_output.innerHTML = "Male Voice = " + malevoice.value/100;
+male_output.innerHTML = "Imbalance = " + malevoice.value/100;
 
 malevoice.oninput = function() {
-  male_output.innerHTML = "Male Voice = " + this.value/100;
+  male_output.innerHTML = "Imbalance = " + this.value/100;
 }
 
 var femalevoice = document.getElementById("femalevoice");
 var female_output = document.getElementById("female_output");
-female_output.innerHTML = "Female Voice = " + femalevoice.value/100;
+female_output.innerHTML = "Power Dynamics = " + femalevoice.value/100;
 
 femalevoice.oninput = function() {
-  female_output.innerHTML = "Female Voice = " + this.value/100;
+  female_output.innerHTML = "Power Dynamics = " + this.value/100;
 }
 
 var openminded = document.getElementById("openminded");
@@ -118,10 +118,10 @@ openminded.oninput = function() {
 
 var omexclusivity = document.getElementById("omexclusivity");
 var omexc_output = document.getElementById("omexc_output");
-omexc_output.innerHTML = "Open-Minded Exclusivity = " + omexclusivity.value;
+omexc_output.innerHTML = "Branching = " + omexclusivity.value;
 
 omexclusivity.oninput = function() {
-  omexc_output.innerHTML = "Open-Minded Exclusivity = " + this.value;
+  omexc_output.innerHTML = "Branching = " + this.value;
 }
 
 </script>
