@@ -98,7 +98,7 @@ function functionName(){
 	var generations = 100;
 	var interactions = 10;
 	var power_dynamics = document.getElementById("femalevoice").value/50;
-	var power_decay = 2-power_dynamics;
+	var power_decay = power_dynamics;
 	var r = 0.9;
 	var count = 0
 	
