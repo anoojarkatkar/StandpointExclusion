@@ -5,7 +5,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Standpoint Exclusion</title>
-	<link rel="stylesheet" href="main.css">
+	<link rel="stylesheet" href="css/main.css">
+	<script type="text/javascript" src="simulate.js"></script>
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -13,11 +15,116 @@
 			<img src='Example.png' style="width:50%;" class="image"></img>
 			<p class="starttext">Welcome! In this simulation, we will be imagining knowledge claims as unit vectors embedded in a 4D hypersphere. 
 			The four dimensions correspond to knowledge of being a male, female, majority, and minority respectively.  In this simulated community, people hold knowledge claims that are initially derived from their specific standpoint. A majority female, for example, has a knowledge claim that is oriented with some component "majority" experience, and some component "female" experience. The ratio of these components is determined by the angle "omega," which we will keep around 50/50 (45 degrees) for everyone for simplicity.
-			</p>
-			<p class="starttext">
+			<br></br>
 			In each generation, the members of this community will have the chance to interact with everyone else. The likelihood that the interaction between two individuals happens is determined by the similarity of their two knowledge claims, scaled exponentially by a value called "exclusivity". The more exclusive an individual is, the more likely they are to avoid interacting with knowledge claims different to their own. A certain fraction of the population, called "open-minded" will be less exclusive than everyone else. We will then plot the results after 20 generations.</p>
+		
+			<div class="starttext">
+				<b>Exclusivity:</b> Individuals preferentially interact with those similar to themselves. How significant is this effect?
+				<div id="exc_output"></div>
+				<div class="slidecontainer">
+					<input type="range" min="0" max="20" value="12" class="slider" id="exclusivity">
+				</div>
+			</div>
+			<p></p>
+			<div class="starttext">
+				<b>Minority:</b> What fraction of the population is a minority?
+				<div id="min_output"></div>
+				<div class="slidecontainer">
+					<input type="range" min="0" max="50" value="10" class="slider" id="minority">
+				</div>
+			</div>
+			<p></p>
+			<div class="starttext">
+				<b>Male Voice:</b> To what extent are male voices heard in the community?
+				<div id="male_output"></div>
+				<div class="slidecontainer">
+					<input type="range" min="0" max="100" value="100" class="slider" id="malevoice">
+				</div>
+			</div>
+			<p></p>
+			<div class="starttext">
+				<b>Female Voice:</b> To what extent are female voices heard in the community?
+				<div id="female_output"></div>
+				<div class="slidecontainer">
+					<input type="range" min="0" max="100" value="50" class="slider" id="femalevoice">
+				</div>
+			</div>
+			<p></p>
+			<div class="starttext">
+				<b>Open-Minded:</b> What fraction of the population is open-minded?
+				<div id="om_output"></div>
+				<div class="slidecontainer">
+					<input type="range" min="0" max="100" value="0" class="slider" id="openminded">
+				</div>
+			</div>
+			<p></p>
+			<div class="starttext">
+				<b>Open-Minded Exclusivity:</b> For those who are open-minded, what is their exclusivity?
+				<div id="omexc_output"></div>
+				<div class="slidecontainer">
+					<input type="range" min="0" max="20" value="0" class="slider" id="omexclusivity">
+				</div>
+			</div>
+			<p></p>
+			<button class="button button1" onclick="functionName()">Run Simulation!</button>
+			<div id="tester"></div>
+			
+			<p class="starttext">This graph connects the initial knowledge claims of each individual to their final knowledge claim after the 20 iterations. To interpret this graph, examine 1) whether there are any consensus knowledge claims reached by different groups, 2) how representative that consensus knowledge claim is of each perspective, and 3) whether there are any perspectives that are excluded from this consensus. Depending on the parameters you set, you might see echo chambers (four isolated groups), intersectional marginalization (one isolated group), gender/racial inequality (a consensus that is offset from the center) and more!</p>
+			
 		</div>
+
 	</div>
+	<br/><br/>
+<script>
+var exclusivity = document.getElementById("exclusivity");
+var exc_output = document.getElementById("exc_output");
+exc_output.innerHTML = "Exclusivity = " + exclusivity.value;
+
+exclusivity.oninput = function() {
+  exc_output.innerHTML = "Exclusivity = " + this.value;
+}
+
+var minority = document.getElementById("minority");
+var min_output = document.getElementById("min_output");
+min_output.innerHTML = "Minority = " + minority.value + "%";
+
+minority.oninput = function() {
+  min_output.innerHTML = "Minority = " + this.value + "%";
+}
+
+var malevoice = document.getElementById("malevoice");
+var male_output = document.getElementById("male_output");
+male_output.innerHTML = "Male Voice = " + malevoice.value/100;
+
+malevoice.oninput = function() {
+  male_output.innerHTML = "Male Voice = " + this.value/100;
+}
+
+var femalevoice = document.getElementById("femalevoice");
+var female_output = document.getElementById("female_output");
+female_output.innerHTML = "Female Voice = " + femalevoice.value/100;
+
+femalevoice.oninput = function() {
+  female_output.innerHTML = "Female Voice = " + this.value/100;
+}
+
+var openminded = document.getElementById("openminded");
+var om_output = document.getElementById("om_output");
+om_output.innerHTML = "Open-Minded = " + openminded.value + "%";
+
+openminded.oninput = function() {
+  om_output.innerHTML = "Open-Minded = " + this.value + "%";
+}
+
+var omexclusivity = document.getElementById("omexclusivity");
+var omexc_output = document.getElementById("omexc_output");
+omexc_output.innerHTML = "Open-Minded Exclusivity = " + omexclusivity.value;
+
+omexclusivity.oninput = function() {
+  omexc_output.innerHTML = "Open-Minded Exclusivity = " + this.value;
+}
+
+</script>
 
 </body>
 </html>
