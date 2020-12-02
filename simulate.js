@@ -34,7 +34,7 @@ function functionName(){
 	
 	for (i=0; i < N; i++){
 		
-		if (i / N/2) {
+		if (i < N/2) {
 			imb = imbalance;
 		} else {
 			imb = 1 - imbalance;
